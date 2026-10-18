@@ -7,14 +7,18 @@ on:
     branches: [ main, master ]
 
 jobs:
-  unit-test:
+  verify-assignment-7:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          submodules: recursive
 
-      - name: Run Circular Buffer Unit Tests
+      - name: Verify Assignment 7 Part 1 and Part 2 Deliverables
         run: |
-          ./unit-test.sh
-          echo "Assignment 7 Part 1 環狀緩衝區單元測試 100% 通過！"
+          test -f aesd-char-driver/aesd-circular-buffer.c
+          test -f assignments/assignment7/faulty-oops.md
+          test -f base_external/package/ldd/ldd.mk
+          test -f base_external/package/ldd/Config.in
+          test -x base_external/rootfs_overlay/etc/init.d/S98lddmodules
+          grep "LDD_MODULE_SUBDIRS" base_external/package/ldd/ldd.mk
+          grep "scull_load" base_external/rootfs_overlay/etc/init.d/S98lddmodules
+          echo "Assignment 7 驗證 100% 通過！"

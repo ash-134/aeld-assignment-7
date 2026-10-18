@@ -1,0 +1,21 @@
+AESD_ASSIGNMENTS_VERSION = e47a5c17489100d5aba5899df02531acaf1dc24f
+AESD_ASSIGNMENTS_SITE = [https://github.com/$](https://github.com/$){GH_USER}/aeld-assignment-7.git
+AESD_ASSIGNMENTS_SITE_METHOD = git
+AESD_ASSIGNMENTS_GIT_SUBMODULES = YES
+
+define AESD_ASSIGNMENTS_BUILD_CMDS
+	$(MAKE) $(TARGET_CONFIGURE_OPTS) -C $(@D)/finder-app all
+	$(MAKE) $(TARGET_CONFIGURE_OPTS) -C $(@D)/server all
+endef
+
+define AESD_ASSIGNMENTS_INSTALL_TARGET_CMDS
+	$(INSTALL) -d 0755 $(@D)/conf/ $(TARGET_DIR)/etc/finder-app/conf/
+	$(INSTALL) -m 0755 $(@D)/conf/* $(TARGET_DIR)/etc/finder-app/conf/
+	$(INSTALL) -m 0755 $(@D)/finder-app/writer $(TARGET_DIR)/usr/bin/
+	$(INSTALL) -m 0755 $(@D)/finder-app/finder.sh $(TARGET_DIR)/usr/bin/
+	$(INSTALL) -m 0755 $(@D)/finder-app/finder-test.sh $(TARGET_DIR)/usr/bin/
+	$(INSTALL) -m 0755 $(@D)/server/aesdsocket $(TARGET_DIR)/usr/bin/
+	$(INSTALL) -m 0755 $(@D)/server/aesdsocket-start-stop $(TARGET_DIR)/etc/init.d/S99aesdsocket
+endef
+
+$(eval $(generic-package))
