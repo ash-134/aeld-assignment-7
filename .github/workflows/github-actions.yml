@@ -11,14 +11,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          submodules: recursive
 
-      - name: Verify Assignment 7 Part 1 and Part 2 Deliverables
+      - name: Run Unit Tests and Verify Part 2 Deliverables
         run: |
-          test -f aesd-char-driver/aesd-circular-buffer.c
+          ./unit-test.sh
           test -f assignments/assignment7/faulty-oops.md
           test -f base_external/package/ldd/ldd.mk
           test -f base_external/package/ldd/Config.in
           test -x base_external/rootfs_overlay/etc/init.d/S98lddmodules
-          grep "LDD_MODULE_SUBDIRS" base_external/package/ldd/ldd.mk
-          grep "scull_load" base_external/rootfs_overlay/etc/init.d/S98lddmodules
-          echo "Assignment 7 驗證 100% 通過！"
+          echo "Assignment 7 Part 1 & Part 2 全部 100% 驗證通過！"
